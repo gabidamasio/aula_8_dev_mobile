@@ -107,10 +107,4 @@ Dessa forma, a ferramenta contribuiu como suporte técnico e didático, mas a an
 
 ## 6. Declaração
 
-Declaro que utilizei a ferramenta de Inteligência Artificial Claude (Anthropic), modelo Claude Sonnet 5.5, como recurso de apoio durante o desenvolvimento do aplicativo Rastreador de Hábitos, referente à Aula 8 (Hooks, Zustand e persistência local em React Native/Expo).
-
-A ferramenta foi utilizada para esclarecer dúvidas, compreender conceitos, consultar possibilidades de implementação, revisar trechos de código e auxiliar na identificação de problemas. As sugestões recebidas foram analisadas criticamente e adaptadas conforme os requisitos da atividade e a estrutura do projeto.
-
-A implementação, as decisões sobre as alterações aplicadas, a execução dos comandos e os testes de funcionamento foram conduzidos por mim. Não considerei as respostas da IA como necessariamente corretas ou definitivas, realizando verificações antes de incorporar as sugestões ao projeto.
-
-Assim, assumo a responsabilidade pela implementação e pela versão final entregue.
+Declaro que utilizei a ferramenta de Inteligência Artificial [nome da ferramenta e versão conforme o Catálogo de IA do CESAR] nesta atividade, com a finalidade de gerar um rascunho sobre o desenvolvimento do aplicativo Rastreador de Hábitos (Aula 8: Hooks, Zustand e persistência local em React Native/Expo), sobre o qual realizei análise crítica (curadoria) das informações apresentadas. Não tratei dados pessoais no uso desta ferramenta. Revisei criticamente o conteúdo gerado, identificando seus acertos e eventuais imprecisões, e assumo a responsabilidade integral pela versão final apresentada.
