@@ -1,8 +1,6 @@
 // Exercício 5 (Parte B) — Persistência local em disco com expo-sqlite
 // Onde: src/services/focus-db.ts
 
-import * as SQLite from 'expo-sqlite';
-
 export type FocusLog = {
   id: number;
   habitId: string;
@@ -10,6 +8,7 @@ export type FocusLog = {
 };
 
 export async function openFocusDb() {
+  const SQLite = await import('expo-sqlite');
   const db = await SQLite.openDatabaseAsync('habits.db');
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS focus_logs (

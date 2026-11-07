@@ -17,11 +17,21 @@ export function TelaDetalheHabito() {
   const backgroundColor = isDark ? '#121212' : '#fff';
   const textColor = isDark ? '#fff' : '#000';
 
+  // Volta para a tela anterior; se não houver histórico (ex.: app recarregado
+  // direto no detalhe), vai para a Home em vez de gerar o aviso GO_BACK.
+  const voltar = () => {
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace('/');
+    }
+  };
+
   if (!habit) {
     return (
       <View style={[styles.container, { backgroundColor }]}>
         <Text style={[styles.titulo, { color: textColor }]}>Hábito não encontrado</Text>
-        <Pressable onPress={() => router.back()} style={[styles.botao, styles.botaoVoltar]}>
+        <Pressable onPress={voltar} style={[styles.botao, styles.botaoVoltar]}>
           <Text style={styles.textoBotao}>Voltar</Text>
         </Pressable>
       </View>
@@ -34,7 +44,7 @@ export function TelaDetalheHabito() {
 
   const handleRemove = () => {
     removeHabit(habit.id);
-    router.back();
+    voltar();
   };
 
   return (
@@ -59,7 +69,7 @@ export function TelaDetalheHabito() {
           <Text style={styles.textoBotao}>Excluir hábito</Text>
         </Pressable>
 
-        <Pressable onPress={() => router.back()} style={[styles.botao, styles.botaoVoltar]}>
+        <Pressable onPress={voltar} style={[styles.botao, styles.botaoVoltar]}>
           <Text style={styles.textoBotao}>Voltar</Text>
         </Pressable>
       </View>

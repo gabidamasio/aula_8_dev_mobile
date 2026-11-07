@@ -1,8 +1,6 @@
-// Exercício 1 — useState: lista imutável e atualização funcional
-// Onde: src/screens/tela-habitos-rapidos.tsx (rota: src/app/quick-habits.tsx)
-
 import { useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useTheme } from '../context/theme-context';
 
 type HabitItem = {
   id: string;
@@ -11,6 +9,7 @@ type HabitItem = {
 };
 
 export function QuickHabitsScreen() {
+  const { isDark } = useTheme();
   const [text, setText] = useState('');
   const [totalClicks, setTotalClicks] = useState(0);
   const [habits, setHabits] = useState<HabitItem[]>([
@@ -18,34 +17,44 @@ export function QuickHabitsScreen() {
     { id: '2', title: 'Caminhar 20 min', done: true },
   ]);
 
+  const backgroundColor = isDark ? '#121212' : '#fff';
+  const textColor = isDark ? '#fff' : '#000';
+  const secondaryTextColor = isDark ? '#ccc' : '#666';
+  const inputBorderColor = isDark ? '#555' : '#ccc';
+  const cardBorderColor = isDark ? '#333' : '#eee';
+
   const handleAdd = () => {
     if (!text.trim()) return;
-    // TODO Ex 1.1: Adicionar novo hábito de forma imutável (usando ...prev) e limpar 'text'
-    void setHabits;
+    setHabits((prev) => [
+      ...prev,
+      { id: Date.now().toString(), title: text.trim(), done: false },
+    ]);
+    setText('');
   };
 
   const handleToggle = (id: string) => {
-    // TODO Ex 1.2: Inverter 'done' com .map() e somar +1 em 'totalClicks' com prev => prev + 1
-    void id;
-    void setHabits;
-    void setTotalClicks;
+    setHabits((prev) =>
+      prev.map((habit) => (habit.id === id ? { ...habit, done: !habit.done } : habit))
+    );
+    setTotalClicks((prev) => prev + 1);
   };
 
   const handleRemove = (id: string) => {
-    // TODO Ex 1.3: Remover hábito com .filter()
-    void id;
-    void setHabits;
+    setHabits((prev) => prev.filter((habit) => habit.id !== id));
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.counter}>Interações hoje: {totalClicks}</Text>
+    <View style={[styles.container, { backgroundColor }]}>
+      <Text style={[styles.counter, { color: secondaryTextColor }]}>
+        Interações hoje: {totalClicks}
+      </Text>
       <View style={styles.row}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { borderColor: inputBorderColor, color: textColor }]}
           value={text}
           onChangeText={setText}
           placeholder="Novo hábito..."
+          placeholderTextColor={isDark ? '#999' : '#888'}
         />
         <Pressable style={styles.addBtn} onPress={handleAdd}>
           <Text style={styles.addBtnText}>+</Text>
@@ -56,9 +65,9 @@ export function QuickHabitsScreen() {
         data={habits}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.card}>
+          <View style={[styles.card, { borderColor: cardBorderColor }]}>
             <Pressable style={styles.cardTitle} onPress={() => handleToggle(item.id)}>
-              <Text style={styles.titleText}>
+              <Text style={[styles.titleText, { color: textColor }]}>
                 {item.done ? '✅' : '⬜'} {item.title}
               </Text>
             </Pressable>
@@ -76,12 +85,12 @@ export default QuickHabitsScreen;
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
-  counter: { fontSize: 14, color: '#666', marginBottom: 12 },
+  counter: { fontSize: 14, marginBottom: 12 },
   row: { flexDirection: 'row', gap: 8, marginBottom: 16 },
-  input: { flex: 1, borderWidth: 1, borderColor: '#ccc', borderRadius: 8, paddingHorizontal: 12 },
+  input: { flex: 1, borderWidth: 1, borderRadius: 8, paddingHorizontal: 12 },
   addBtn: { backgroundColor: '#FF6002', paddingHorizontal: 18, justifyContent: 'center', borderRadius: 8 },
   addBtnText: { color: '#fff', fontSize: 20, fontWeight: 'bold' },
-  card: { flexDirection: 'row', alignItems: 'center', padding: 12, borderBottomWidth: 1, borderColor: '#eee' },
+  card: { flexDirection: 'row', alignItems: 'center', padding: 12, borderBottomWidth: 1 },
   cardTitle: { flex: 1 },
   titleText: { fontSize: 16 },
   deleteText: { color: '#c62828', fontWeight: 'bold' },
